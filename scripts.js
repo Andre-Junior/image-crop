@@ -1,6 +1,6 @@
 const photoFile = document.getElementById('photo-file');
 let photoPreview = document.getElementById('photo-preview');
-let image = new Image();
+let image;
 let photoName;
 
 //Select & Preview image
@@ -19,7 +19,9 @@ window.addEventListener('DOMContentLoaded', () => {
         let reader = new FileReader()
         reader.readAsDataURL(file)
         reader.onload = (event) => {
+            image = new Image();
             image.src = event.target.result
+            image.onload = onLoadImage
         }
     })
 })
@@ -80,7 +82,7 @@ Object.keys(events)
 let canvas = document.createElement('canvas')
 let ctx = canvas.getContext('2d')
 
-image.onload = () => {
+function onLoadImage () {
     const {width, height} = image
     canvas.width = width
     canvas.height = height
