@@ -1,5 +1,6 @@
 const photoFile = document.getElementById('photo-file')
-let image = document.getElementById('photo-preview')
+let photoPreview = document.getElementById('photo-preview')
+let image = new Image()
 
 //Select & Preview image
 
@@ -65,5 +66,23 @@ const events = {
 
 Object.keys(events)
 .forEach(eventName => {
-    image.addEventListener(eventName, events[eventName])
+    photoPreview.addEventListener(eventName, events[eventName])
 })
+
+//Canvas 
+let canvas = document.createElement('canvas')
+let ctx = canvas.getContext('2d')
+
+image.onload = () => {
+    const {width, height} = image
+    canvas.width = width
+    canvas.height = height
+
+    // limpar o contexto
+    ctx.clearRect(0, 0, width, height)
+
+    //desenhar a imagem no contexto 
+    ctx.drawImage(image, 0, 0)
+
+    photoPreview.src = canvas.toDataURL()
+}
