@@ -116,3 +116,14 @@ img {
 #photo-preview {
     margin: .8rem 0;
 }
+
+#selection-tool {
+    position: fixed;
+    display: none;
+    border: 2px dashed var(--green);
+
+   /*  top: 0;
+    left: 0;
+    width: 200px;
+    height: 200px; */
+}

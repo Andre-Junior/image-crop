@@ -1,5 +1,7 @@
 const photoFile = document.getElementById('photo-file')
 
+//Select & Preview image
+
 document.getElementById('select-image')
 .onclick= () => {
     photoFile.click()
@@ -16,3 +18,14 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     })
 })
+
+//Selection tooll
+
+const events = {
+    mouseover(){},
+    mousedown(){},
+    mousemove(){},
+    mouseup(){} 
+}
+
+Object.keys(events)
