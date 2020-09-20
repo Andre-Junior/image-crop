@@ -1,6 +1,7 @@
-const photoFile = document.getElementById('photo-file')
-let photoPreview = document.getElementById('photo-preview')
-let image = new Image()
+const photoFile = document.getElementById('photo-file');
+let photoPreview = document.getElementById('photo-preview');
+let image = new Image();
+let photoName;
 
 //Select & Preview image
 
@@ -12,6 +13,9 @@ document.getElementById('select-image')
 window.addEventListener('DOMContentLoaded', () => {
     photoFile.addEventListener('change', () => {
         let file = photoFile.files.item(0)
+        photoName = file.name;
+
+
         let reader = new FileReader()
         reader.readAsDataURL(file)
         reader.onload = (event) => {
@@ -130,6 +134,14 @@ cropButton.onclick = () => {
 
     photoPreview.src = canvas.toDataURL()
 
+    downloadButton.style.display = 'initial'
 
+}
 
+const downloadButton = document.getElementById('download')
+downloadButton.onclick = () => {
+    const a = document.createElement('a')
+    a.download = photoName + '-cropped.png';
+    a.href = canvas.toDataURL();
+    a.click()
 }

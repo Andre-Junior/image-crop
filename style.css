@@ -128,6 +128,6 @@ img {
     height: 200px; */
 }
 
-#crop-image{
+#crop-image, #download{
     display: none;
 }
