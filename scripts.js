@@ -20,9 +20,9 @@ window.addEventListener('DOMContentLoaded', () => {
     })
 })
 
-//Selection tooll
+//Selection tool
 
-const selection=  document.getElementById('selection-tool')
+const selection = document.getElementById('selection-tool')
 
 let startX, startY, relativeStartX, relativeStartY,
 endX, endY, relativeEndX, relativeEndY;
@@ -61,6 +61,9 @@ const events = {
 
         relativeEndX = event.layerX;
         relativeEndY = event.layerY;
+
+        //mostrar o notão de corte
+        cropButton.style.display = 'initial'
     } 
 }
 
@@ -85,4 +88,48 @@ image.onload = () => {
     ctx.drawImage(image, 0, 0)
 
     photoPreview.src = canvas.toDataURL()
+}
+
+//Cortar imagem
+const cropButton = document.getElementById('crop-image')
+cropButton.onclick = () => {
+    const {width: imgW, height: imgH} = image
+    const {width: previewW, height: previewH} = photoPreview
+
+    const [ widthFactor, heightFactor ] = [ 
+        +(imgW / previewW),
+        +(imgH / previewH)
+    ]
+
+    const [ selectionWidth, selectionHeight ] = [
+        +selection.style.width.replace('px', ''),
+        +selection.style.height.replace('px', '')
+    ]
+
+    const [ croppedWidth, croppedHeigth ] = [
+        +(selectionWidth * widthFactor),
+        +(selectionHeight * heightFactor)
+    ]
+
+    const [ actualX, actualY ] = [
+        +(relativeStartX * widthFactor),
+        +(relativeStartY * heightFactor)
+    ]
+
+    const croppedImage = ctx.getImageData(actualX, actualY, croppedWidth, croppedHeigth)
+
+    //limpar o ctx do canvas
+    ctx.clearRect(0,0,ctx.width,ctx.height)
+
+    image.width = canvas.width = croppedWidth;
+    image.height = canvas.height = croppedHeigth;
+
+    ctx.putImageData(croppedImage, 0, 0)
+
+    selection.style.display = 'none'
+
+    photoPreview.src = canvas.toDataURL()
+
+
+
 }
